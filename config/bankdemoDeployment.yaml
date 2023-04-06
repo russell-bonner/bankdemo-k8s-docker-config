@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
       - name: bankdemo-app
-        image: docker.io/micropj/ed8bankdemo:ubuntu2204
+        image: docker.io/russellbonner/bankdemo:latest
         imagePullPolicy: IfNotPresent
       imagePullSecrets:
       - name: regcred
@@ -81,7 +81,7 @@ metadata:
     nginx.ingress.kubernetes.io/session-cookie-hash: sha1
 spec:
   rules:
-  - host: escwa.10.27.27.63.nip.io
+  - host: escwa.13.42.12.206.nip.io
     http:
       paths:
       - pathType: Prefix
@@ -91,7 +91,7 @@ spec:
             name: bankdemo-escwa-service
             port:
               number: 10086 
-  - host: hacloud.10.27.27.63.nip.io
+  - host: hacloud.13.42.12.206.nip.io
     http:
       paths:
       - pathType: Prefix
