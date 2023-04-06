@@ -1,0 +1,52 @@
+version: "3.9"
+
+services:
+  traefik:
+    image: traefik  
+    # Enables the web UI and tells Traefik to listen to docker
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.escwa.address=:80"
+      - "--entrypoints.tn3270.address=:8001"
+      - "--accesslog=true" 
+      - "--accesslog.filepath=/logs/access.log"
+    ports:
+      - 80:80    # ESCWA  
+      - 8080:8080  # Traefik's web UI, enabled by --api
+      - 8001:8001  # TN3270
+    volumes:
+      # So that Traefik can listen to the Docker events
+      - /var/run/docker.sock:/var/run/docker.sock 
+      - ./logs/:/logs/
+    networks:
+      - traefik-net
+  bankdemo:
+    #container_name: bankdemo
+    hostname: bankdemo 
+    image: micropj/ed8bankdemo:ubuntu2204 
+    restart: unless-stopped
+      #ports:
+      #  - "7443:7443"
+      #  - "8001:8001"
+      #  - "10086:10086"
+      #  - "30040-30050:30040-30050"
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.escwa.rule=Host(`10.27.27.63`)
+      - traefil.docker.network=traefik-net
+      - traefik.http.routers.escwa.entrypoints=escwa
+      - traefik.http.services.escwa.loadbalancer.server.port=10086
+      - traefik.http.services.escwa.loadbalancer.server.scheme=http
+      - traefik.tcp.routers.tn3270.rule=HostSNI(`*`)
+      - traefik.tcp.routers.tn3270.entrypoints=tn3270
+      - traefik.tcp.routers.tn3270.service=tn3270-svc
+      - traefik.tcp.services.tn3270-svc.loadbalancer.server.port=30050
+      - traefik.tcp.middlewares.tn3270-rate-limit.inflightconn.amount=10
+      - traefik.tcp.routers.tn3270.middlewares=tn3270-rate-limit@docker
+    scale: 1
+    networks:
+      - traefik-net
+networks:
+    traefik-net: {}
