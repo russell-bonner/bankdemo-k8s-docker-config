@@ -98,7 +98,7 @@ spec:
         path: /
         backend:
           service:
-            name: bankdemo-escwa-service
+            name: bankdemo-hacloud-service
             port:
               number: 7443 
 ---
