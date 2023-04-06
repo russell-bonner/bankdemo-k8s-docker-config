@@ -34,12 +34,12 @@ services:
       #  - "30040-30050:30040-30050"
     labels:
       - traefik.enable=true
-      - traefik.http.routers.escwa.rule=Host(`10.27.27.63`)
+      - traefik.http.routers.escwa.rule=Host('13.42.12.206')
       - traefil.docker.network=traefik-net
       - traefik.http.routers.escwa.entrypoints=escwa
       - traefik.http.services.escwa.loadbalancer.server.port=10086
       - traefik.http.services.escwa.loadbalancer.server.scheme=http
-      - traefik.tcp.routers.tn3270.rule=HostSNI(`*`)
+      - traefik.tcp.routers.tn3270.rule=HostSNI('*')
       - traefik.tcp.routers.tn3270.entrypoints=tn3270
       - traefik.tcp.routers.tn3270.service=tn3270-svc
       - traefik.tcp.services.tn3270-svc.loadbalancer.server.port=30050
