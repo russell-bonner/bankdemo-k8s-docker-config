@@ -81,7 +81,7 @@ metadata:
     nginx.ingress.kubernetes.io/session-cookie-hash: sha1
 spec:
   rules:
-  - host: escwa.13.42.12.206.nip.io
+  - host: escwa.35.178.78.198.nip.io
     http:
       paths:
       - pathType: Prefix
@@ -91,7 +91,7 @@ spec:
             name: bankdemo-escwa-service
             port:
               number: 10086 
-  - host: hacloud.13.42.12.206.nip.io
+  - host: hacloud.35.178.78.198.nip.io
     http:
       paths:
       - pathType: Prefix

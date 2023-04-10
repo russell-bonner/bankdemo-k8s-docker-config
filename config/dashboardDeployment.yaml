@@ -8,7 +8,7 @@ metadata:
       nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
     rules:
-    - host: dashboard.13.42.12.206.nip.io
+    - host: dashboard.35.178.78.198.nip.io
       http:
         paths:
         - pathType: Prefix
