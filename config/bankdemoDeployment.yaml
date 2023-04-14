@@ -33,12 +33,11 @@ spec:
       imagePullSecrets:
       - name: regcred
 
----
 
 kind: Service
 apiVersion: v1
 metadata:
-  name: bankdemo-escwa-service
+  name: bankdemo-service
 spec:
   type: LoadBalancer
   selector:
@@ -49,22 +48,7 @@ spec:
     port: 10086 #default port for the image 
   - name: hacloud
     port: 7443
----
 
-#kind: Service
-#apiVersion: v1
-#metadata:
-#  name: bankdemo-hacloud-service
-#spec:
-#  type: LoadBalancer
-#  selector:
-#    app: bankdemo-app
-#  ports:
-  # Default port used by the image
-  #  - name: hacloud
-  #  port: 7443
-  #
-#---
 
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -81,24 +65,23 @@ metadata:
     nginx.ingress.kubernetes.io/session-cookie-hash: sha1
 spec:
   rules:
-  - host: escwa.35.178.78.198.nip.io
+  - host: escwa.3.10.228.106.nip.io
     http:
       paths:
       - pathType: Prefix
         path: /
         backend:
           service:
-            name: bankdemo-escwa-service
+            name: bankdemo-service
             port:
               number: 10086 
-  - host: hacloud.35.178.78.198.nip.io
+  - host: hacloud.3.10.228.106.nip.io
     http:
       paths:
       - pathType: Prefix
         path: /
         backend:
           service:
-            name: bankdemo-hacloud-service
+            name: bankdemo-service
             port:
               number: 7443 
----
