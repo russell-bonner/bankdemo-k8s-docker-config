@@ -14,7 +14,7 @@ services:
       - "--accesslog.filepath=/logs/access.log"
     ports:
       - 80:80    # ESCWA  
-      - 8080:8080  # Traefik's web UI, enabled by --api
+      - 8081:8080  # Traefik's web UI, enabled by --api
       - 8001:8001  # TN3270
     volumes:
       # So that Traefik can listen to the Docker events
@@ -34,7 +34,7 @@ services:
       #  - "30040-30050:30040-30050"
     labels:
       - traefik.enable=true
-      - traefik.http.routers.escwa.rule=Host(`13.42.12.206`)
+      - traefik.http.routers.escwa.rule=Host(`3.10.228.106`)
       - traefil.docker.network=traefik-net
       - traefik.http.routers.escwa.entrypoints=escwa
       - traefik.http.services.escwa.loadbalancer.server.port=10086
